@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dreamhouse — экскурсия по сайту курса</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Playfair+Display:ital,wght@1,500;1,700&display=swap" rel="stylesheet">
+<style>
+:root{--sky1:#bdd0df;--sky2:#dfe7ee;--ink:#3e1f2b;--pink:#e9afc1;--pink2:#f9dde6;--blue:#bdd0df;--burg:#3e1f2b;--cream:#fff6ea;--hot:#f0629f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky1:#2a3550;--sky2:#323f5c;--ink:#fbe9ee}}
+:root[data-theme="dark"]{--sky1:#2a3550;--sky2:#323f5c;--ink:#fbe9ee}
+*,*::before,*::after{box-sizing:inherit}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;background:repeating-linear-gradient(90deg,var(--sky1) 0 28px,var(--sky2) 28px 56px);color:var(--ink);font:400 16px/1.6 Montserrat,system-ui,sans-serif;overflow-x:clip;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--hot);outline-offset:3px}
+.serif{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:700}
+.wrap{max-width:1320px;margin:auto;padding:32px 4vw 56px;display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,.85fr);gap:12px 40px;align-items:start}
+.top{grid-column:1/-1;margin-bottom:8px}
+h1{font-size:clamp(42px,7.5vw,96px);line-height:1;margin:0 0 12px}
+.top p{margin:0;max-width:36em}
+.house{position:relative;overflow:hidden;border-radius:6px}
+.roof{height:clamp(70px,13vw,150px);background:var(--hot);clip-path:polygon(50% 0,100% 100%,0 100%);display:grid;align-items:end;justify-items:center;padding-bottom:12px;color:var(--cream);font-size:clamp(20px,4vw,44px)}
+.floors{border:3px solid var(--burg);background:var(--cream)}
+.floor{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.floor+.floor{border-top:3px solid var(--burg)}
+.room{position:relative;aspect-ratio:1/.92;border:0;border-right:3px solid var(--burg);background:var(--w);padding:0;margin:0;font:inherit;color:var(--burg);cursor:pointer;overflow:hidden;text-align:left;animation:pop .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--k)*.08s)}
+.room:nth-child(3n){border-right:0}
+.room::after{content:"";position:absolute;left:0;right:0;bottom:0;height:20%;background:rgba(62,31,43,.14);border-top:2px solid rgba(62,31,43,.35)}
+.room::before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;transition:background .5s}
+.sel .room:not(.on)::before{background:rgba(62,31,43,.42)}
+.room.on::before{background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.6),transparent 70%)}
+.room.on{box-shadow:inset 0 0 0 5px var(--hot)}
+.room b{position:absolute;left:10px;top:10px;z-index:2;font:600 12px/1.3 Montserrat,sans-serif;background:var(--cream);border:1px solid var(--burg);border-radius:99px;padding:2px 12px}
+.room i{position:absolute;bottom:17%;z-index:1;font-style:normal;font-size:clamp(30px,6.4vw,70px);line-height:1}
+.room i.w{bottom:auto;top:34%;left:42%;font-size:clamp(22px,3.8vw,44px);opacity:.9}
+.room.on i{animation:wig .9s}
+.base{height:clamp(58px,10vw,96px);border:3px solid var(--burg);border-top:0;background:var(--pink)}
+.mode{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.btn.on{background:var(--burg);color:var(--cream)}
+.me{position:absolute;left:0;top:0;width:clamp(46px,8.5vw,84px);aspect-ratio:1;z-index:5;pointer-events:none;transition:transform 1.1s cubic-bezier(.5,0,.2,1)}
+.hp{width:100%;height:100%;position:relative}
+.hp.hop{animation:hop .5s}
+.me img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;border-radius:50%;border:3px solid var(--burg);display:block;background:var(--pink)}
+.me s{position:absolute;top:-14px;right:-8px;font-size:26px;text-decoration:none}
+.ht{position:absolute;z-index:6;font-size:22px;pointer-events:none;animation:ht 1.6s ease-out forwards}
+.panel{position:sticky;top:20px;background:var(--cream);color:var(--burg);border:3px solid var(--burg);border-radius:28px;padding:28px 26px 22px}
+.panel::before{content:"";position:absolute;left:-17px;top:56px;width:28px;height:28px;background:var(--cream);border-left:3px solid var(--burg);border-bottom:3px solid var(--burg);transform:rotate(45deg)}
+.pc{animation:fade .5s both}
+.chip{display:inline-block;background:var(--pink);border:1.5px solid var(--burg);border-radius:99px;padding:2px 14px;font-size:12px;font-weight:600;margin-bottom:12px}
+.pc h2{font-size:clamp(30px,4.2vw,46px);line-height:1.05;margin:0 0 10px}
+.pc p{margin:0 0 12px}
+.pc ul{margin:0 0 6px;padding-left:20px;font-size:14px}
+.pc li{margin-bottom:5px}
+.nav{display:flex;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+.btn{font:600 14px Montserrat,sans-serif;border:1.5px solid var(--burg);border-radius:99px;padding:12px 24px;cursor:pointer;background:var(--cream);color:var(--burg)}
+.btn.go{background:var(--burg);color:var(--cream)}
+.dots{display:flex;gap:6px;margin-left:auto}
+.dots button{width:13px;height:13px;padding:0;border-radius:50%;border:1.5px solid var(--burg);background:transparent;cursor:pointer}
+.dots button.on{background:var(--hot)}
+footer{grid-column:1/-1;margin-top:20px;font-size:12px}
+.scene{position:absolute;inset:0;z-index:8;visibility:hidden;color:var(--burg);background:repeating-linear-gradient(90deg,rgba(255,255,255,.3) 0 24px,transparent 24px 48px),var(--w);overflow:hidden}
+.scene.open{visibility:visible}
+.full .floors,.full .roof,.full .base{visibility:hidden}
+.sw{position:absolute;inset:0}
+.sr{animation:inR .55s cubic-bezier(.2,.8,.2,1) both}.sl{animation:inL .55s cubic-bezier(.2,.8,.2,1) both}
+.sw .x{position:absolute;top:12px;right:12px;z-index:5;font:600 12px Montserrat,sans-serif;background:var(--cream);color:var(--burg);border:1.5px solid var(--burg);border-radius:99px;padding:8px 16px;cursor:pointer}
+.hd{position:relative;z-index:2;padding:22px 20px 0;max-width:62%}
+.hd h2{font-size:clamp(26px,4vw,48px);line-height:1.05;margin:0 0 6px}
+.hd small{font-size:12px;font-weight:600}
+.win{position:absolute;right:8%;top:70px;width:clamp(86px,22%,190px);aspect-ratio:1/1.15;border:4px solid var(--burg);border-radius:90px 90px 6px 6px;background:linear-gradient(var(--sky2),var(--sky1));overflow:hidden}
+.win::before,.win::after{content:"";position:absolute;background:var(--burg)}
+.win::before{left:50%;top:0;bottom:0;width:4px}.win::after{top:50%;left:0;right:0;height:4px}
+.sw .wd{position:absolute;right:12%;top:46%;font-style:normal;font-size:clamp(38px,8vw,84px);line-height:1}
+.notes{list-style:none;margin:18px 20px 0;padding:0;max-width:58%;position:relative;z-index:2}
+.notes li{padding:12px 16px;margin-bottom:12px;border:1.5px solid var(--burg);font-size:14px;line-height:1.4;background:var(--pink2);box-shadow:3px 3px 0 var(--burg);animation:note .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--b,.3s) + var(--j)*.15s)}
+.notes li:nth-child(odd){transform:rotate(-1.2deg)}
+.notes li:nth-child(2){background:var(--blue);transform:rotate(1deg)}
+.fl{position:absolute;left:0;right:0;bottom:0;height:26%;border-top:3px solid var(--burg);background:repeating-linear-gradient(90deg,rgba(62,31,43,.1) 0 2px,transparent 2px 64px),rgba(62,31,43,.16)}
+.sw .f1,.sw .f2{position:absolute;bottom:12%;font-style:normal;font-size:clamp(56px,11vw,124px);line-height:1}
+.f1{left:20%}.f2{right:20%}
+.sa{position:absolute;left:calc(50% - clamp(36px,6vw,60px));bottom:7%;width:clamp(72px,12vw,120px);animation:bob 2.4s ease-in-out infinite}
+.sa img{width:100%;aspect-ratio:1;object-fit:cover;object-position:50% 18%;border-radius:50%;border:3px solid var(--burg);display:block}
+.door{position:absolute;bottom:0;width:clamp(56px,13%,96px);height:44%;background:var(--pink);border:3px solid var(--burg);border-bottom:0;border-radius:60px 60px 0 0;font:600 10px Montserrat,sans-serif;color:var(--burg);cursor:pointer;display:grid;align-content:center;justify-items:center;gap:2px;padding:0}
+.door span{font-size:24px;line-height:1}
+.door::after{content:"";position:absolute;top:62%;width:8px;height:8px;border-radius:50%;background:var(--burg)}
+.door.l{left:3%}.door.l::after{right:9px}.door.r{right:3%}.door.r::after{left:9px}
+@keyframes inR{from{opacity:0;transform:translateX(80px)}}
+@keyframes inL{from{opacity:0;transform:translateX(-80px)}}
+@keyframes note{from{opacity:0;translate:0 -30px;scale:.9}}
+@keyframes bob{50%{transform:translateY(-8px)}}
+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.94)}}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}}
+@keyframes hop{40%{transform:translateY(-18px)}}
+@keyframes wig{25%{transform:rotate(-12deg) scale(1.15)}60%{transform:rotate(10deg) scale(1.1)}}
+@keyframes ht{from{opacity:1}to{opacity:0;transform:translate(var(--dx),-110px)}}
+@media (prefers-reduced-motion:reduce){.sr,.sl{animation-name:fade}.sa{animation:none}.room{animation-name:fade}.hp.hop,.room.on i{animation:none}}
+@media (max-width:900px){
+.wrap{grid-template-columns:minmax(0,1fr);padding-top:24px}
+.panel{position:relative;top:0;margin-top:20px}
+.panel::before{left:44px;top:-17px;transform:rotate(135deg)}
+.room{aspect-ratio:1/1}
+.room b{font-size:10px;padding:1px 8px;left:5px;top:5px}
+.dots{margin-left:0;width:100%;flex-wrap:wrap}
+.btn{padding:14px 22px}
+.house.inroom{min-height:min(620px,150vw)}
+.hd{max-width:72%}.notes{max-width:62%;margin-inline:16px}.notes li{font-size:13px;padding:10px 12px}
+.dots button{width:18px;height:18px}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="top">
+<h1 class="serif">Заходите в Dreamhouse</h1>
+<p>Большая интерактивная экскурсия: три этажа, девять комнат. Нажимайте на комнаты и смотрите, как будет проходить обучение шаг за шагом.</p>
+<div class="mode"><button class="btn on" data-m="0" aria-pressed="true">Как проходит курс</button><button class="btn" data-m="1" aria-pressed="false">Как устроен сайт</button></div>
+</div>
+<div class="house" id="house">
+<div class="roof serif">UGC Dreamhouse</div>
+<div class="floors" id="floors"></div>
+<div class="base" id="lawn"></div>
+<div class="scene" id="scene"></div>
+<div class="me" id="me"><div class="hp" id="hp"><img src="images/author.jpg" alt="Алина, автор курса" width="84" height="84"><s>🎀</s></div></div>
+</div>
+<aside class="panel" id="panel" aria-live="polite"><div class="pc" id="pc"></div></aside>
+<footer>Демо-экскурсия по сайту курса «Монтаж UGC-видео»</footer>
+</main>
+<script>
+(function(){
+var D=[["Балкон","#f3e3f7","🌸","🪑","🧭"],["Прихожая","#f9dde6","🪞","🪴","🎀"],["Монтажная студия","#bdd0df","🎞️","💡","🎬"],["Гостиная","#fbe8d3","🛋️","🧸","🖼️"],["Кухня","#dfe7ee","🍳","🧁","⏲️"],["Кабинет","#e9afc1","💻","📱","✨"],["Гардеробная","#f9dde6","👗","👠","👜"],["Библиотека","#fbe8d3","📚","🕯️","❓"],["Терраса","#cfe3d4","🌴","🍹","💌"]];
+var C=[[
+{h:"Выбираете тариф",t:"Смотрите программу и решаете, как учиться: самостоятельно или с разбором ваших работ от автора.",l:["Тариф «Самостоятельно»","Тариф «С обратной связью»","Вопросы можно задать до оплаты"]},
+{h:"Записываетесь",t:"Оставляете контакт, получаете программу и ссылку на оплату. Это занимает пару минут.",l:["Одно поле: Telegram или почта","Ссылка на оплату","Приветственное сообщение с первыми шагами"]},
+{h:"Начинаете с основ",t:"Первые два модуля: как подготовить материал и собрать первый ролик. Результат появляется уже в первую неделю.",l:["Подготовка материала","Нарезка, склейки и ритм","Первый собранный ролик"]},
+{h:"Подключаете звук и текст",t:"Учитесь делать так, чтобы ролик было приятно слушать и легко читать: голос, музыка, субтитры и акценты.",l:["Чистый звук и музыка","Субтитры и стикеры","Свой стиль без перегруза"]},
+{h:"Строите структуру ролика",t:"Разбираем, как строить сюжет короткого видео и почему первые секунды решают, досмотрят ли его до конца.",l:["Цепляющее начало","Удержание до конца","Разбор удачных примеров"]},
+{h:"Делаете практику",t:"После каждого модуля есть задание. Вы собираете свои ролики в удобном темпе, а шаблоны и пресеты всегда под рукой.",l:["Задание после каждого модуля","Шаблоны и пресеты","Темп выбираете сами"]},
+{h:"Получаете разбор",t:"На тарифе с обратной связью автор смотрит ваши работы и подсказывает, что улучшить. Рядом закрытый чат с группой.",l:["Разбор ваших роликов","Закрытый чат","Ответы на вопросы по ходу"]},
+{h:"Собираете портфолио",t:"Шестой модуль: как оформить лучшие ролики так, чтобы бренду захотелось написать именно вам.",l:["Выбор лучших работ","Оформление портфолио","Форматы файлов для клиента"]},
+{h:"Ищете первые заказы",t:"Готовите отклики брендам, учитесь принимать правки и называть цену. Здесь курс превращается в доход.",l:["Шаблоны писем брендам","Работа с правками","Как назвать цену за монтаж"]}
+],[
+{h:"Балкон",b:"Шапка и меню",t:"Отсюда видно весь дом: логотип и меню ведут к любому блоку. На телефоне меню листается пальцем.",l:["Логотип и кнопка «Записаться»","Меню с быстрыми переходами","Удобно листается на телефоне"]},
+{h:"Прихожая",b:"Первый экран",t:"Здесь знакомимся. Заголовок обещает результат, а фото автора показывает, к кому идут на курс.",l:["Заголовок с обещанием результата","Короткое описание курса","Кнопка «Выбрать тариф»"]},
+{h:"Монтажная студия",b:"Таймлайн и бегущая строка",t:"Полосы таймлайна показывают, что ученик научится собирать. Бегущая строка перечисляет ключевые навыки.",l:["Полосы появляются одна за другой","Маркер воспроизведения бежит по ролику","Ключевые слова курса в движении"]},
+{h:"Гостиная",b:"Чему вы научитесь",t:"Три главных результата простыми словами, без сложных терминов: читается за полминуты.",l:["Собирать ролики быстро","Удерживать внимание зрителя","Работать с клиентом и правками"]},
+{h:"Кухня",b:"Программа курса",t:"Шесть модулей идут по порядку, как шаги рецепта. Каждый раскрывается по клику и заканчивается заданием.",l:["Подготовка материала и основы монтажа","Звук, текст и графика","Структура ролика, сдача и портфолио"]},
+{h:"Кабинет",b:"Анимации и прокрутка",t:"Сайт оживает, пока вы листаете: блоки появляются по очереди, линии рисуются, а сверху растёт полоса прогресса.",l:["Появление блоков при прокрутке","Линии под заголовками рисуются сами","Полоса прокрутки вверху экрана"]},
+{h:"Гардеробная",b:"Тарифы",t:"Как выбор образа: берёте обучение в своём темпе или добавляете личный разбор работ от автора.",l:["«Самостоятельно» для своего темпа","«С обратной связью» с разбором","Цена и состав рядом"]},
+{h:"Библиотека",b:"Вопросы",t:"Короткие ответы на частые сомнения: нужен ли опыт, на чём монтировать и сколько времени это займёт.",l:["Три частых вопроса","Ответы раскрываются по клику","Меньше сомнений перед записью"]},
+{h:"Терраса",b:"Запись",t:"Оставляете контакт в одно поле и получаете программу и ссылку на оплату. Здесь экскурсия заканчивается.",l:["Одно поле: Telegram или почта","Крупная кнопка «Записаться»","Сообщение после отправки"]}
+]];
+var INTRO=[["Как проходит курс","Привет! Покажу путь от записи до первых заказов","Девять комнат — девять шагов обучения. Нажмите на комнату, и откроется её интерьер."],["Экскурсия по сайту","Привет! Я проведу вас по дому","Каждая комната — один блок сайта. Нажмите на комнату, чтобы зайти внутрь."]];
+var $=function(id){return document.getElementById(id)},house=$("house"),me=$("me"),hp=$("hp"),pc=$("pc"),i=-1,m=0,timer,openT,fullT,inRoom=false,sc=$("scene");
+var fl="";for(var f=0;f<3;f++){fl+='<div class="floor">';for(var c=0;c<3;c++){var k=f*3+c,d=D[k];fl+='<button class="room" style="--w:'+d[1]+';--k:'+k+'" data-k="'+k+'"><b>'+d[0]+'</b><i style="left:8%">'+d[2]+'</i><i style="left:66%">'+d[3]+'</i><i class="w">'+d[4]+'</i></button>'}fl+='</div>'}
+$("floors").innerHTML=fl;
+var rooms=[].slice.call(document.querySelectorAll(".room"));
+function place(k){
+var hr=house.getBoundingClientRect(),w=me.offsetWidth,x,y;
+if(k<0){var g=$("lawn").getBoundingClientRect();x=hr.width*.05;y=g.top-hr.top+(g.height-w)/2}
+else{var r=rooms[k].getBoundingClientRect();x=r.left-hr.left+r.width/2-w/2;y=r.bottom-hr.top-r.height*.2-w*.85}
+me.style.transform="translate("+x+"px,"+y+"px)";
+}
+function hearts(k){
+var hr=house.getBoundingClientRect(),r=rooms[k].getBoundingClientRect();
+for(var n=0;n<6;n++){var h=document.createElement("span");h.className="ht";h.textContent=n%2?"💖":"💗";
+h.style.left=(r.left-hr.left+r.width*(.2+Math.random()*.6))+"px";h.style.top=(r.bottom-hr.top-r.height*.3)+"px";
+h.style.setProperty("--dx",(Math.random()*60-30)+"px");h.style.animationDelay=(.9+n*.1)+"s";h.style.opacity=0;
+house.appendChild(h);setTimeout(function(x){x.remove()},3000,h)}
+}
+function dots(){var s="";for(var k=0;k<9;k++)s+='<button data-k="'+k+'" aria-label="Комната '+(k+1)+': '+D[k][0]+'"'+(k===i?' class="on"':'')+'></button>';return '<div class="dots">'+s+'</div>'}
+function render(){
+var h;
+if(i<0){var n=INTRO[m];h='<span class="chip">'+n[0]+'</span><h2 class="serif">'+n[1]+'</h2><p>'+n[2]+'</p><div class="nav"><button class="btn go" data-a="next">Начать экскурсию</button></div>'}
+else{var d=C[m][i];h='<span class="chip">'+(m?"Блок сайта: "+d.b:"Шаг "+(i+1)+" из 9")+'</span><h2 class="serif">'+d.h+'</h2><p>'+d.t+'</p><ul>'+d.l.map(function(x){return"<li>"+x+"</li>"}).join("")+'</ul><div class="nav"><button class="btn" data-a="prev">Назад</button><button class="btn go" data-a="next">'+(i===8?"Сначала":"Дальше")+'</button>'+dots()+'</div>'}
+pc.style.animation="none";pc.innerHTML=h;void pc.offsetWidth;pc.style.animation="";
+}
+function rectIn(p){var hr=house.getBoundingClientRect(),r=rooms[p].getBoundingClientRect();return"inset("+(r.top-hr.top)+"px "+(hr.right-r.right)+"px "+(hr.bottom-r.bottom)+"px "+(r.left-hr.left)+"px)"}
+function buildScene(k,dir,first){
+var d=D[k],c=C[m][k],img=document.querySelector(".me img").src;
+sc.style.setProperty("--w",d[1]);sc.style.setProperty("--b",first?".95s":".25s");
+sc.innerHTML='<div class="sw'+(dir>0?" sr":dir<0?" sl":"")+'"><button class="x" data-s="close">К дому ✕</button><div class="hd"><span class="chip">'+(m?"Блок сайта: "+c.b:"Шаг "+(k+1)+" из 9")+'</span><h2 class="serif">'+c.h+'</h2><small>'+d[0]+'</small></div><div class="win"></div><i class="wd">'+d[4]+'</i><ul class="notes">'+c.l.map(function(x,j){return'<li style="--j:'+j+'">'+x+'</li>'}).join("")+'</ul><div class="fl"></div><i class="f1">'+d[2]+'</i><i class="f2">'+d[3]+'</i><div class="sa"><img src="'+img+'" alt=""></div><button class="door l" data-s="prev"><span>←</span>'+(k?"назад":"к дому")+'</button><button class="door r" data-s="next"><span>→</span>'+(k===8?"к дому":"дальше")+'</button></div>';
+}
+function openScene(k){
+buildScene(k,0,1);house.classList.add("inroom");
+sc.style.transition="none";sc.style.clipPath=rectIn(k);sc.classList.add("open");void sc.offsetWidth;
+sc.style.transition="clip-path .85s cubic-bezier(.7,0,.2,1)";sc.style.clipPath="inset(0px)";
+inRoom=true;fullT=setTimeout(function(){house.classList.add("full")},900);
+}
+function closeScene(p){
+inRoom=false;house.classList.remove("full");
+sc.style.transition="clip-path .7s cubic-bezier(.7,0,.2,1)";sc.style.clipPath=rectIn(p);
+setTimeout(function(){if(!inRoom){sc.classList.remove("open");house.classList.remove("inroom")}},740);
+}
+sc.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var a=b.getAttribute("data-s");
+if(a==="close")closeScene(i);else if(a==="prev")go(i-1);else if(a==="next")go(i===8?-1:i+1)});
+function go(k){
+var p=i;i=k;
+rooms.forEach(function(r,j){r.classList.toggle("on",j===k);r.setAttribute("aria-pressed",j===k)});
+house.classList.toggle("sel",k>=0);
+place(k);render();
+hp.classList.remove("hop");clearTimeout(timer);
+timer=setTimeout(function(){hp.classList.add("hop")},900);
+if(k>=0&&!inRoom)hearts(k);
+clearTimeout(openT);clearTimeout(fullT);
+if(k<0){if(inRoom)closeScene(p)}else if(inRoom){buildScene(k,k>p?1:-1,0)}else{openT=setTimeout(function(){openScene(k)},1000)}
+}
+rooms.forEach(function(r){r.addEventListener("click",function(){go(+r.getAttribute("data-k"))})});
+$("panel").addEventListener("click",function(e){
+var t=e.target.closest("button");if(!t)return;
+if(t.hasAttribute("data-k"))return go(+t.getAttribute("data-k"));
+var a=t.getAttribute("data-a");
+if(a==="next")go(i===8?-1:i+1);
+if(a==="prev")go(i-1);
+});
+[].slice.call(document.querySelectorAll(".mode .btn")).forEach(function(b){b.addEventListener("click",function(){
+m=+b.getAttribute("data-m");
+[].slice.call(document.querySelectorAll(".mode .btn")).forEach(function(x){var on=x===b;x.classList.toggle("on",on);x.setAttribute("aria-pressed",on)});
+go(-1)})});
+addEventListener("resize",function(){place(i);if(inRoom)sc.style.clipPath="inset(0px)"});
+addEventListener("load",function(){place(i)});
+place(-1);render();
+})();
+</script>
+</body>
+</html>
